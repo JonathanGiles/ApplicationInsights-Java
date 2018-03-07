@@ -81,15 +81,9 @@ public final class WebRequestTrackingFilter implements Filter {
         try {
             chain.doFilter(req, response);
             invokeSafeOnEndRequest(req, response, isRequestProcessedSuccessfully);
-        } catch (ServletException se) {
-            onException(se, req, response,isRequestProcessedSuccessfully);
-            throw se;
-        } catch (IOException ioe) {
-            onException(ioe, req, response, isRequestProcessedSuccessfully);
-            throw ioe;
-        } catch (RuntimeException re) {
-            onException(re, req, response, isRequestProcessedSuccessfully);
-            throw re;
+        } catch (Exception e) {
+            onException(e, req, response, isRequestProcessedSuccessfully);
+            throw e;
         } finally {
             cleanup();
         }
